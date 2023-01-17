@@ -722,6 +722,7 @@ boost_write(struct cgroup_subsys_state *css, struct cftype *cft,
 }
 
 #ifdef OPLUS_FEATURE_POWER_CPUFREQ
+#ifdef CONFIG_SCHED_wALT
 unsigned int schedtune_window_policy(struct task_struct *p)
 {
 	struct schedtune *st;
@@ -808,6 +809,7 @@ window_policy_write(struct cgroup_subsys_state *css, struct cftype *cft,
 	return 0;
 }
 #endif
+#endif
 
 #ifdef OPLUS_FEATURE_POWER_EFFICIENCY
 #define PE_FUNC(NAME) \
@@ -858,11 +860,13 @@ static struct cftype files[] = {
 		.write_u64 = prefer_idle_write,
 	},
 #ifdef OPLUS_FEATURE_POWER_CPUFREQ
+#ifdef CONFIG_SCHED_WALT
 	{
 		.name = "window_policy",
 		.read_u64 = window_policy_read,
 		.write_u64 = window_policy_write,
 	},
+#endif
 #endif
 #ifdef OPLUS_FEATURE_POWER_EFFICIENCY
 	{
